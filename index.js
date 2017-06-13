@@ -45,3 +45,4 @@ var data = [
 ];
 
 qz.print(config, data).catch(function(e) { console.error(e); });
+
