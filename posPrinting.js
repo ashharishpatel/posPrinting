@@ -46,6 +46,7 @@ function businessHeader(businessHeader) {
 
 function mainBody(items) {
   var itemsArray = [];
+  var totalQuantity = 0;
   itemsArray.push('\x0A');
   itemsArray.push('\x0A');
   _.each(items, function (item) {
@@ -54,7 +55,10 @@ function mainBody(items) {
       return x.toUpperCase()
     }));
     itemsArray.push('\x1B' + '\x61' + '\x32'); //right align
-    itemsArray.push(item.quantity + '    ' + (item.cost * item.quantity) + '\x0A');
+    itemsArray.push(item.quantity + '    ' + (item.cost * item.quantity).toFixed(2) + '\x0A');
+	(item.subtitle === '') ? itemsArray.push('\x1B' + '\x61' + '\x30', item.category) : itemsArray.push('\x1B' + '\x61' + '\x30', item.subtitle);
+	(item.discount === '') ? null : itemsArray.push('\x1B' + '\x61' + '\x32', item.discount.toFixed(2))
+	totalQuantity = totalQuantity + item.quantity;
   });
   itemsArray.push('\x0A');
   itemsArray.push('____________________________________________________________________________');
@@ -99,11 +103,13 @@ function footer(billInfo) {
 }
 var a = [{
   category: 'beverages',
-  cost: 150,
+  cost: 150.3145104,
   id: 'OztZypClxv',
   itemId: 'h2u2FLESUO',
   name: 'bud light',
-  quantity: 2
+  quantity: 2,
+  subtitle: '',
+  discount: 79.654525
 }];
 
 console.log(mainBody(a));
