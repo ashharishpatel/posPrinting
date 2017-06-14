@@ -44,3 +44,36 @@ function createBillComponents(billComponents) {
     });
     return billComponentsArray;
 }
+
+function calculateWhiteSpace(spaceLength, key, value, col) {
+    var total;
+    var whiteSpace = '';
+    var i;
+    var stringTrimmed = value;
+    var result = '';
+    if (col) {
+        if(value.length > (spaceLength*col)-2){
+            stringTrimmed = value.substring(0,(spaceLength*col)-5) + '...';
+            total = (spaceLength * col) - stringTrimmed.length;
+        } else {
+            total = (spaceLength * col) - stringTrimmed.length;
+        }
+    } else {
+        total = spaceLength - key.length - stringTrimmed.length;
+    }
+    for (i = 0; i < total; i++) {
+        whiteSpace = whiteSpace + ' ';
+    } 
+    if(col){
+        if(key === 'name'){
+            result = result + stringTrimmed + whiteSpace;
+        }else{
+            result = result + whiteSpace + stringTrimmed;
+        }
+    }else{
+        result = key + whiteSpace + stringTrimmed;
+    }
+    return result;
+}
+console.log(calculateWhiteSpace(80, 'subtotal', '589.00', null));
+console.log(calculateWhiteSpace(80, 'name', 'chicken ihgiheaioghioaehghahioaheiogdsmbgrksjhlkehabjkekgkleangklehnaklgnkleangkleangeklangl', 0.4) + calculateWhiteSpace(80, 'quantity', '20', 0.3) + calculateWhiteSpace(80, 'rate', '34.20', 0.3));
